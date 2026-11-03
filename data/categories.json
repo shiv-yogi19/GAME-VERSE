@@ -1,0 +1,65 @@
+[
+  {
+    "id": "all",
+    "name": "All Games",
+    "icon": "grid",
+    "description": "Browse complete universe collection",
+    "accentColor": "#00f0ff"
+  },
+  {
+    "id": "racing",
+    "name": "Racing",
+    "icon": "speedometer",
+    "description": "High-octane cyber tracks & hypercars",
+    "accentColor": "#ff007f"
+  },
+  {
+    "id": "action",
+    "name": "Action",
+    "icon": "zap",
+    "description": "Fast-paced combat & robotic warfare",
+    "accentColor": "#ff5500"
+  },
+  {
+    "id": "shooting",
+    "name": "Shooting",
+    "icon": "crosshair",
+    "description": "Precision neon railguns & space dogfights",
+    "accentColor": "#00ff88"
+  },
+  {
+    "id": "puzzle",
+    "name": "Puzzle",
+    "icon": "cpu",
+    "description": "Quantum logic & cyber cryptographic puzzles",
+    "accentColor": "#a855f7"
+  },
+  {
+    "id": "arcade",
+    "name": "Arcade",
+    "icon": "gamepad",
+    "description": "Retro futuristic neon synthwave reflex tests",
+    "accentColor": "#ffd700"
+  },
+  {
+    "id": "strategy",
+    "name": "Strategy",
+    "icon": "shield",
+    "description": "Galactic fleet command & tactical grid defense",
+    "accentColor": "#3b82f6"
+  },
+  {
+    "id": "sports",
+    "name": "Sports",
+    "icon": "activity",
+    "description": "Anti-gravity cyber league arena sports",
+    "accentColor": "#06b6d4"
+  },
+  {
+    "id": "casual",
+    "name": "Casual",
+    "icon": "sparkles",
+    "description": "Relaxing interstellar ambient simulations",
+    "accentColor": "#ec4899"
+  }
+]
