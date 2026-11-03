@@ -1,0 +1,196 @@
+/* ==========================================================================
+   GAMEVERSE - Player Profile Component CSS
+   Created By Shiv Yogi | Animated Avatar Reaction States & Gaming Stats
+   ========================================================================== */
+
+.profile-avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.profile-avatar-glow-ring {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+}
+
+.profile-avatar-large {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              filter 0.3s ease,
+              border-color 0.3s ease;
+}
+
+/* Avatar Reaction States */
+.reaction-happy {
+  transform: scale(1.1) rotate(4deg);
+  border-color: #00ff88 !important;
+  box-shadow: 0 0 30px #00ff88 !important;
+}
+
+.reaction-excited {
+  animation: avatarExcitedReaction 1s ease-in-out infinite;
+  border-color: #ff007f !important;
+  box-shadow: 0 0 35px #ff007f !important;
+}
+
+.reaction-victory {
+  animation: avatarVictoryGlow 1.5s ease-in-out infinite, avatarExcitedReaction 1.5s ease-in-out infinite;
+  border-color: #ffd700 !important;
+}
+
+.profile-player-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #ffffff;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-player-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(0, 240, 255, 0.2);
+  color: var(--neon-cyan);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.profile-edit-name-toggle {
+  background: transparent;
+  border: none;
+  color: #a0aed6;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.profile-edit-name-toggle:hover {
+  color: var(--neon-cyan);
+}
+
+.profile-edit-box {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.profile-edit-box.active {
+  display: flex;
+}
+
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.profile-stat-card {
+  background: rgba(14, 23, 58, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+.profile-stat-num {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--neon-cyan);
+}
+
+.profile-stat-lbl {
+  font-size: 11px;
+  color: #a0aed6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+.profile-section-heading {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-history-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.profile-history-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(10, 16, 40, 0.7);
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.profile-history-card:hover {
+  background: rgba(18, 28, 68, 0.8);
+  border-color: var(--neon-cyan);
+  transform: translateX(3px);
+}
+
+.profile-history-card img {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.profile-history-card span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-empty-item {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: rgba(160, 174, 214, 0.6);
+  padding: 10px;
+  text-align: center;
+  font-style: italic;
+}
