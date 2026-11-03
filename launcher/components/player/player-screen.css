@@ -1,0 +1,181 @@
+/* ==========================================================================
+   GAMEVERSE - In-Game Player Screen & Cinematic Transitions
+   Created By Shiv Yogi | Gaming HUD, Sandboxed Iframe & Reverse Zoom
+   ========================================================================== */
+
+#game-player-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20000;
+  background: #02040a;
+  display: none;
+  opacity: 0;
+  transform: scale(0.9);
+  filter: blur(15px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#game-player-container.active {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0px);
+}
+
+#game-player-container.exiting {
+  opacity: 0;
+  transform: scale(1.6);
+  filter: blur(25px);
+}
+
+/* Sandboxed Frame Wrapper */
+#game-iframe-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000000;
+}
+
+.game-sandboxed-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  display: block;
+}
+
+/* In-Game Glass HUD Bar */
+#game-player-hud {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px;
+  border-radius: 20px;
+  background: rgba(5, 8, 20, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  opacity: 0.35;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#game-player-hud:hover,
+#game-player-hud:focus-within {
+  opacity: 1;
+  transform: translateX(-50%) translateY(2px);
+}
+
+.hud-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(14, 23, 58, 0.6);
+  border: 1px solid var(--glass-border);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.hud-btn:hover {
+  background: rgba(0, 240, 255, 0.2);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+}
+
+.hud-btn.active {
+  background: rgba(255, 170, 0, 0.3);
+  border-color: #ffaa00;
+  color: #ffaa00;
+}
+
+.hud-btn.muted,
+.hud-btn.disabled {
+  opacity: 0.4;
+}
+
+.hud-btn-exit {
+  background: rgba(255, 0, 85, 0.2);
+  border-color: rgba(255, 0, 85, 0.4);
+  color: #ff0055;
+  padding: 0 14px;
+  width: auto;
+  border-radius: 16px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  gap: 6px;
+}
+
+.hud-btn-exit:hover {
+  background: rgba(255, 0, 85, 0.4);
+  border-color: #ff0055;
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 0, 85, 0.5);
+}
+
+/* Premium Launching Loader Animation */
+#game-launch-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 30000;
+  background: radial-gradient(circle at 50% 50%, #0c163a 0%, #03050f 70%, #000104 100%);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#game-launch-loader.active {
+  display: flex;
+  opacity: 1;
+}
+
+.loader-radar-ring {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 240, 255, 0.2);
+  border-top-color: var(--neon-cyan);
+  border-right-color: var(--neon-magenta);
+  animation: radarSweep 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.35);
+  margin-bottom: 24px;
+}
+
+.loader-game-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+  margin-bottom: 8px;
+}
+
+.loader-status-text {
+  font-size: 13px;
+  color: var(--neon-cyan);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: badgeFlash 1.4s ease-in-out infinite;
+}
