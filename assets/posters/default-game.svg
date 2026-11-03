@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="100%" height="100%">
+  <defs>
+    <radialGradient id="cyberBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0f1738" />
+      <stop offset="60%" stop-color="#050814" />
+      <stop offset="100%" stop-color="#020308" />
+    </radialGradient>
+    <linearGradient id="neonCyanPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="100%" stop-color="#7000ff" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="600" height="900" fill="url(#cyberBg)" />
+
+  <g stroke="rgba(0, 240, 255, 0.15)" stroke-width="1.5">
+    <line x1="50" y1="100" x2="550" y2="100" />
+    <line x1="50" y1="300" x2="550" y2="300" />
+    <line x1="50" y1="500" x2="550" y2="500" />
+    <line x1="50" y1="700" x2="550" y2="700" />
+    <line x1="150" y1="50" x2="150" y2="850" />
+    <line x1="300" y1="50" x2="300" y2="850" />
+    <line x1="450" y1="50" x2="450" y2="850" />
+  </g>
+
+  <!-- Big Futuristic Cartridge / Gamepad Icon -->
+  <g transform="translate(300, 420)">
+    <rect x="-140" y="-90" width="280" height="180" rx="30" fill="rgba(112, 0, 255, 0.2)" stroke="url(#neonCyanPurple)" stroke-width="4" filter="url(#glow)" />
+    <!-- D-pad -->
+    <path d="M-80,-25 L-60,-25 L-60,-45 L-40,-45 L-40,-25 L-20,-25 L-20,-5 L-40,-5 L-40,15 L-60,15 L-60,-5 L-80,-5 Z" fill="#00f0ff" opacity="0.8" />
+    <!-- Action buttons -->
+    <circle cx="50" cy="-20" r="10" fill="#ff007f" />
+    <circle cx="80" cy="5" r="10" fill="#00f0ff" />
+    <circle cx="50" cy="30" r="10" fill="#00ff88" />
+    <circle cx="20" cy="5" r="10" fill="#ffd700" />
+  </g>
+
+  <text x="300" y="780" font-family="'Orbitron', sans-serif" font-weight="900" font-size="30" letter-spacing="4" fill="#ffffff" text-anchor="middle">
+    GAME POSTER
+  </text>
+  <text x="300" y="825" font-family="'Rajdhani', sans-serif" font-weight="600" font-size="16" letter-spacing="3" fill="#00f0ff" text-anchor="middle">
+    GAMEVERSE EXPANSION COMPATIBLE
+  </text>
+</svg>

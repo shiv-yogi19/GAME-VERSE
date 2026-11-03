@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#090317"/>
+      <stop offset="50%" stop-color="#190938"/>
+      <stop offset="100%" stop-color="#05010d"/>
+    </linearGradient>
+    <filter id="purpleGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="600" height="900" fill="url(#bg)"/>
+
+  <!-- Quantum Neural Grid Network -->
+  <g transform="translate(300, 400)">
+    <!-- Circuit Lines -->
+    <path d="M-180,-120 L-60,-60 L0,0 L120,-60 L180,-120" stroke="#a855f7" stroke-width="2" fill="none" opacity="0.6"/>
+    <path d="M-180,120 L-80,60 L0,0 L80,60 L180,120" stroke="#00f0ff" stroke-width="2" fill="none" opacity="0.6"/>
+    <path d="M-120,-180 L0,-90 L120,-180" stroke="#c084fc" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M-120,180 L0,90 L120,180" stroke="#38bdf8" stroke-width="2" fill="none" opacity="0.5"/>
+    
+    <!-- Central Quantum Core Cube -->
+    <polygon points="0,-70 60,-35 60,35 0,70 -60,35 -60,-35" fill="rgba(168, 85, 247, 0.25)" stroke="#c084fc" stroke-width="3" filter="url(#purpleGlow)"/>
+    <line x1="0" y1="0" x2="0" y2="70" stroke="#c084fc" stroke-width="2"/>
+    <line x1="0" y1="0" x2="-60" y2="-35" stroke="#c084fc" stroke-width="2"/>
+    <line x1="0" y1="0" x2="60" y2="-35" stroke="#c084fc" stroke-width="2"/>
+
+    <!-- Orbiting Energy Synapses -->
+    <circle cx="-180" cy="-120" r="10" fill="#a855f7" filter="url(#purpleGlow)"/>
+    <circle cx="180" cy="-120" r="10" fill="#00f0ff" filter="url(#purpleGlow)"/>
+    <circle cx="-180" cy="120" r="10" fill="#00f0ff" filter="url(#purpleGlow)"/>
+    <circle cx="180" cy="120" r="10" fill="#a855f7" filter="url(#purpleGlow)"/>
+    <circle cx="0" cy="0" r="12" fill="#ffffff" filter="url(#purpleGlow)"/>
+  </g>
+
+  <!-- Badges Top -->
+  <g transform="translate(40, 50)">
+    <rect width="90" height="28" rx="6" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="1.2"/>
+    <text x="45" y="19" font-family="'Orbitron', sans-serif" font-size="12" font-weight="700" fill="#a855f7" text-anchor="middle">★ 4.6</text>
+  </g>
+  <g transform="translate(460, 50)">
+    <rect width="100" height="28" rx="6" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="1.2"/>
+    <text x="50" y="19" font-family="'Orbitron', sans-serif" font-size="11" font-weight="700" fill="#a855f7" text-anchor="middle">PUZZLE</text>
+  </g>
+
+  <!-- Title Bottom Overlay -->
+  <rect x="0" y="730" width="600" height="170" fill="url(#bg)" opacity="0.92"/>
+  <text x="300" y="790" font-family="'Orbitron', sans-serif" font-weight="900" font-size="32" letter-spacing="3" fill="#ffffff" text-anchor="middle">
+    NEURAL MATRIX
+  </text>
+  <text x="300" y="830" font-family="'Orbitron', sans-serif" font-weight="800" font-size="26" letter-spacing="6" fill="#a855f7" text-anchor="middle" filter="url(#purpleGlow)">
+    NEXUS
+  </text>
+  <text x="300" y="865" font-family="'Rajdhani', sans-serif" font-weight="600" font-size="14" letter-spacing="4" fill="#c4b5fd" text-anchor="middle">
+    QUANTUM AI LOGIC & CRYPTOGRAPHY
+  </text>
+</svg>

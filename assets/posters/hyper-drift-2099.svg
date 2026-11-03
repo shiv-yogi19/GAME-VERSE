@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#05030f"/>
+      <stop offset="50%" stop-color="#140628"/>
+      <stop offset="100%" stop-color="#020008"/>
+    </linearGradient>
+    <linearGradient id="magentaNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff007f"/>
+      <stop offset="100%" stop-color="#7928ca"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="600" height="900" fill="url(#bg)"/>
+
+  <!-- Hyper Speed Vortex Rings -->
+  <g transform="translate(300, 420)">
+    <ellipse cx="0" cy="0" rx="260" ry="80" fill="none" stroke="#7928ca" stroke-width="2" opacity="0.3"/>
+    <ellipse cx="0" cy="0" rx="220" ry="65" fill="none" stroke="#ff007f" stroke-width="2.5" opacity="0.5" filter="url(#glow)"/>
+    <ellipse cx="0" cy="0" rx="170" ry="50" fill="none" stroke="#00f0ff" stroke-width="3" opacity="0.7"/>
+    <ellipse cx="0" cy="0" rx="110" ry="32" fill="none" stroke="#ffffff" stroke-width="3.5" filter="url(#glow)"/>
+  </g>
+
+  <!-- Anti-Gravity Hover Car -->
+  <g transform="translate(300, 410) rotate(-8)">
+    <polygon points="-120,20 -40,-35 40,-35 120,20 80,45 -80,45" fill="#0d1124" stroke="url(#magentaNeon)" stroke-width="3.5" filter="url(#glow)"/>
+    <polygon points="-40,-15 40,-15 60,10 -60,10" fill="#00f0ff" opacity="0.8"/>
+    <!-- Plasma exhaust trails -->
+    <path d="M-90,35 Q-150,50 -220,120" stroke="#ff007f" stroke-width="6" fill="none" filter="url(#glow)"/>
+    <path d="M90,35 Q150,50 220,120" stroke="#00f0ff" stroke-width="6" fill="none" filter="url(#glow)"/>
+  </g>
+
+  <!-- Sparks and cyber streaks -->
+  <g stroke="#00f0ff" stroke-width="2" opacity="0.6">
+    <line x1="80" y1="180" x2="160" y2="220"/>
+    <line x1="450" y1="200" x2="520" y2="260"/>
+    <line x1="120" y1="580" x2="40" y2="640"/>
+    <line x1="480" y1="560" x2="550" y2="620"/>
+  </g>
+
+  <!-- Badges Top -->
+  <g transform="translate(40, 50)">
+    <rect width="90" height="28" rx="6" fill="rgba(255, 0, 127, 0.2)" stroke="#ff007f" stroke-width="1.2"/>
+    <text x="45" y="19" font-family="'Orbitron', sans-serif" font-size="12" font-weight="700" fill="#ff007f" text-anchor="middle">★ 4.8</text>
+  </g>
+  <g transform="translate(460, 50)">
+    <rect width="100" height="28" rx="6" fill="rgba(0, 240, 255, 0.2)" stroke="#00f0ff" stroke-width="1.2"/>
+    <text x="50" y="19" font-family="'Orbitron', sans-serif" font-size="11" font-weight="700" fill="#00f0ff" text-anchor="middle">RACING</text>
+  </g>
+
+  <!-- Title Bottom Overlay -->
+  <rect x="0" y="730" width="600" height="170" fill="url(#bg)" opacity="0.92"/>
+  <text x="300" y="790" font-family="'Orbitron', sans-serif" font-weight="900" font-size="34" letter-spacing="3" fill="#ffffff" text-anchor="middle">
+    HYPER DRIFT
+  </text>
+  <text x="300" y="830" font-family="'Orbitron', sans-serif" font-weight="800" font-size="28" letter-spacing="6" fill="#ff007f" text-anchor="middle" filter="url(#glow)">
+    2099
+  </text>
+  <text x="300" y="865" font-family="'Rajdhani', sans-serif" font-weight="600" font-size="14" letter-spacing="4" fill="#a0aed6" text-anchor="middle">
+    ZERO GRAVITY ANTI-MATTER LEAGUE
+  </text>
+</svg>

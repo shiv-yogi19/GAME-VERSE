@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#14020a"/>
+      <stop offset="50%" stop-color="#2d0519"/>
+      <stop offset="100%" stop-color="#0a0105"/>
+    </linearGradient>
+    <filter id="crimsonGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="600" height="900" fill="url(#bg)"/>
+
+  <!-- Energy Katana Blade Slashing Down Across Screen -->
+  <g transform="translate(300, 380)">
+    <!-- Motion Slash Arc -->
+    <path d="M-220,-200 Q20,20 180,260" stroke="#ff0055" stroke-width="12" fill="none" opacity="0.4" filter="url(#crimsonGlow)"/>
+    <path d="M-200,-180 Q30,30 170,240" stroke="#ffffff" stroke-width="4" fill="none" filter="url(#crimsonGlow)"/>
+    <!-- Blade Hilt & Guard -->
+    <line x1="-190" y1="-170" x2="-250" y2="-230" stroke="#ffaa00" stroke-width="10"/>
+    <circle cx="-190" cy="-170" r="14" fill="#3b0213" stroke="#ffaa00" stroke-width="3"/>
+  </g>
+
+  <!-- Cybernetic Cherry Blossoms & Digital Sparks -->
+  <g fill="#ff007f" opacity="0.7">
+    <circle cx="150" cy="180" r="6"/>
+    <circle cx="210" cy="240" r="4"/>
+    <circle cx="420" cy="220" r="8"/>
+    <circle cx="380" cy="300" r="5"/>
+    <circle cx="120" cy="460" r="7"/>
+    <circle cx="480" cy="490" r="5"/>
+  </g>
+
+  <!-- Badges Top -->
+  <g transform="translate(40, 50)">
+    <rect width="90" height="28" rx="6" fill="rgba(255, 0, 85, 0.2)" stroke="#ff0055" stroke-width="1.2"/>
+    <text x="45" y="19" font-family="'Orbitron', sans-serif" font-size="12" font-weight="700" fill="#ff0055" text-anchor="middle">★ 4.9</text>
+  </g>
+  <g transform="translate(460, 50)">
+    <rect width="100" height="28" rx="6" fill="rgba(255, 170, 0, 0.2)" stroke="#ffaa00" stroke-width="1.2"/>
+    <text x="50" y="19" font-family="'Orbitron', sans-serif" font-size="11" font-weight="700" fill="#ffaa00" text-anchor="middle">ACTION</text>
+  </g>
+
+  <!-- Title Bottom Overlay -->
+  <rect x="0" y="730" width="600" height="170" fill="url(#bg)" opacity="0.92"/>
+  <text x="300" y="790" font-family="'Orbitron', sans-serif" font-weight="900" font-size="34" letter-spacing="3" fill="#ffffff" text-anchor="middle">
+    CHRONO BLADE
+  </text>
+  <text x="300" y="830" font-family="'Orbitron', sans-serif" font-weight="800" font-size="24" letter-spacing="6" fill="#ff0055" text-anchor="middle" filter="url(#crimsonGlow)">
+    CYBER RONIN
+  </text>
+  <text x="300" y="865" font-family="'Rajdhani', sans-serif" font-weight="600" font-size="14" letter-spacing="4" fill="#d6a0b4" text-anchor="middle">
+    PHOTON KATANA • TIME WARP COMBAT
+  </text>
+</svg>
