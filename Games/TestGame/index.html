@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cyber Neon Overdrive - Demo Game</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    body {
+      background: #02040a;
+      color: #fff;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #gameCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 40%, #0d122e 0%, #050714 60%, #010207 100%);
+    }
+    .hud {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      font-family: monospace;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+    }
+    .hud-stat {
+      background: rgba(5, 12, 30, 0.7);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      padding: 8px 16px;
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+    }
+    .nitro-gauge {
+      color: #00f0ff;
+    }
+    .score-gauge {
+      color: #ff007f;
+    }
+    .speed-gauge {
+      color: #00ff88;
+    }
+    .game-over-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(2, 4, 10, 0.85);
+      backdrop-filter: blur(12px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 100;
+    }
+    .game-over-overlay.active {
+      display: flex;
+    }
+    .btn-restart {
+      background: linear-gradient(135deg, #00f0ff, #7000ff);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <div class="hud-stat speed-gauge">SPEED: <span id="speedVal">140</span> MPH</div>
+    <div class="hud-stat nitro-gauge">NITRO: <span id="nitroVal">100%</span></div>
+    <div class="hud-stat score-gauge">SCORE: <span id="scoreVal">0</span></div>
+  </div>
+
+  <div class="game-over-overlay" id="gameOver">
+    <h2 style="font-size: 32px; color: #ff0055; letter-spacing: 4px; text-shadow: 0 0 15px #ff0055;">SYSTEM OVERHEAT</h2>
+    <p style="color: #a0aed6; letter-spacing: 1px;">FINAL SCORE: <span id="finalScore">0</span></p>
+    <button class="btn-restart" id="btnRestart">REBOOT RACER</button>
+  </div>
+
+  <canvas id="gameCanvas"></canvas>
+
+  <script>
+    // Universal postMessage protocol listener
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const speedEl = document.getElementById('speedVal');
+    const nitroEl = document.getElementById('nitroVal');
+    const scoreEl = document.getElementById('scoreVal');
+    const gameOverEl = document.getElementById('gameOver');
+    const finalScoreEl = document.getElementById('finalScore');
+    const restartBtn = document.getElementById('btnRestart');
+
+    let width, height;
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Game state
+    let player = {
+      x: 0,
+      targetX: 0,
+      lane: 1, // 0: left, 1: center, 2: right
+      speed: 120,
+      maxSpeed: 240,
+      nitro: 100,
+      isNitro: false,
+      color: '#00f0ff'
+    };
+
+    let keys = {
+      left: false,
+      right: false,
+      up: false,
+      down: false,
+      nitro: false
+    };
+
+    let score = 0;
+    let distance = 0;
+    let obstacles = [];
+    let particles = [];
+    let isGameOver = false;
+    let isPaused = false;
+    let lastTime = performance.now();
+
+    // Listen to GameVerse postMessage input API
+    window.addEventListener('message', (event) => {
+      // Validate structure
+      const data = event.data;
+      if (!data || data.type !== 'GAMEVERSE_INPUT') return;
+
+      const { action, code, payload } = data;
+
+      if (action === 'PRESS') {
+        if (code === 'ArrowLeft' || code === 'KeyA') keys.left = true;
+        if (code === 'ArrowRight' || code === 'KeyD') keys.right = true;
+        if (code === 'ArrowUp' || code === 'KeyW') keys.up = true;
+        if (code === 'ArrowDown' || code === 'KeyS') keys.down = true;
+        if (code === 'Space' || code === 'ShiftLeft' || code === 'btn_nitro') keys.nitro = true;
+      } else if (action === 'RELEASE') {
+        if (code === 'ArrowLeft' || code === 'KeyA') keys.left = false;
+        if (code === 'ArrowRight' || code === 'KeyD') keys.right = false;
+        if (code === 'ArrowUp' || code === 'KeyW') keys.up = false;
+        if (code === 'ArrowDown' || code === 'KeyS') keys.down = false;
+        if (code === 'Space' || code === 'ShiftLeft' || code === 'btn_nitro') keys.nitro = false;
+      } else if (action === 'JOYSTICK' && payload) {
+        if (payload.x < -0.3) keys.left = true; else keys.left = false;
+        if (payload.x > 0.3) keys.right = true; else keys.right = false;
+        if (payload.y < -0.3) keys.up = true; else keys.up = false;
+        if (payload.y > 0.3) keys.down = true; else keys.down = false;
+      } else if (action === 'PAUSE') {
+        isPaused = !isPaused;
+      } else if (action === 'RESTART') {
+        resetGame();
+      }
+    });
+
+    // Keyboard support for local/desktop direct play
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a') keys.left = true;
+      if (e.key === 'ArrowRight' || e.key === 'd') keys.right = true;
+      if (e.key === 'ArrowUp' || e.key === 'w') keys.up = true;
+      if (e.key === 'ArrowDown' || e.key === 's') keys.down = true;
+      if (e.key === ' ' || e.key === 'Shift') keys.nitro = true;
+      if (e.key === 'p') isPaused = !isPaused;
+      if (e.key === 'r') resetGame();
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a') keys.left = false;
+      if (e.key === 'ArrowRight' || e.key === 'd') keys.right = false;
+      if (e.key === 'ArrowUp' || e.key === 'w') keys.up = false;
+      if (e.key === 'ArrowDown' || e.key === 's') keys.down = false;
+      if (e.key === ' ' || e.key === 'Shift') keys.nitro = false;
+    });
+
+    function spawnObstacle() {
+      const lanes = [-150, 0, 150];
+      const lane = lanes[Math.floor(Math.random() * lanes.length)];
+      obstacles.push({
+        x: lane,
+        y: -100,
+        z: 0.1,
+        width: 60,
+        height: 35,
+        color: Math.random() > 0.5 ? '#ff0055' : '#a855f7'
+      });
+    }
+
+    function resetGame() {
+      isGameOver = false;
+      isPaused = false;
+      gameOverEl.classList.remove('active');
+      score = 0;
+      distance = 0;
+      obstacles = [];
+      particles = [];
+      player.speed = 120;
+      player.nitro = 100;
+      player.x = 0;
+    }
+
+    restartBtn.addEventListener('click', resetGame);
+
+    // Notify launcher that game is loaded & ready
+    try {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'GAMEVERSE_GAME_READY', gameId: 'cyber-neon-overdrive' }, '*');
+      }
+    } catch(e) {}
+
+    let lastSpawn = 0;
+
+    function update(dt) {
+      if (isGameOver || isPaused) return;
+
+      // Steering
+      const steerSpeed = 380;
+      if (keys.left) player.x -= steerSpeed * dt;
+      if (keys.right) player.x += steerSpeed * dt;
+      player.x = Math.max(-200, Math.min(200, player.x));
+
+      // Acceleration & Nitro
+      if (keys.nitro && player.nitro > 0) {
+        player.speed = Math.min(player.maxSpeed, player.speed + 140 * dt);
+        player.nitro = Math.max(0, player.nitro - 35 * dt);
+        // Nitro spark particles
+        particles.push({
+          x: player.x + (Math.random() - 0.5) * 20,
+          y: height - 90,
+          vx: (Math.random() - 0.5) * 60,
+          vy: Math.random() * 150 + 100,
+          color: '#00f0ff',
+          life: 0.4
+        });
+      } else {
+        if (keys.up) {
+          player.speed = Math.min(180, player.speed + 60 * dt);
+        } else if (keys.down) {
+          player.speed = Math.max(70, player.speed - 120 * dt);
+        } else {
+          player.speed = Math.max(110, player.speed - 30 * dt);
+        }
+        player.nitro = Math.min(100, player.nitro + 12 * dt);
+      }
+
+      // Distance and score
+      distance += player.speed * dt;
+      score += Math.floor(player.speed * dt * 0.5);
+
+      // Spawn obstacles
+      lastSpawn += dt;
+      if (lastSpawn > 1.2 - (player.speed / 600)) {
+        spawnObstacle();
+        lastSpawn = 0;
+      }
+
+      // Update obstacles
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        const obs = obstacles[i];
+        obs.z += (player.speed * dt) * 0.003;
+        
+        // Check collision at player position
+        if (obs.z > 0.85 && obs.z < 1.05) {
+          const obsScreenX = obs.x * (obs.z * 1.8);
+          if (Math.abs(player.x - obsScreenX) < 55) {
+            isGameOver = true;
+            finalScoreEl.textContent = score;
+            gameOverEl.classList.add('active');
+          }
+        }
+
+        if (obs.z > 1.2) {
+          obstacles.splice(i, 1);
+        }
+      }
+
+      // Update particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.life -= dt;
+        if (p.life <= 0) particles.splice(i, 1);
+      }
+
+      // Update HUD
+      speedEl.textContent = Math.floor(player.speed);
+      nitroEl.textContent = Math.floor(player.nitro) + '%';
+      scoreEl.textContent = score;
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, width, height);
+
+      const horizon = height * 0.45;
+      const centerX = width / 2;
+
+      // Synthwave Sun
+      const sunGrad = ctx.createLinearGradient(centerX, horizon - 140, centerX, horizon);
+      sunGrad.addColorStop(0, '#ff007f');
+      sunGrad.addColorStop(0.6, '#ff7700');
+      sunGrad.addColorStop(1, '#ffe600');
+      ctx.fillStyle = sunGrad;
+      ctx.beginPath();
+      ctx.arc(centerX, horizon, 100, Math.PI, 0, false);
+      ctx.fill();
+
+      // Road perspective grid
+      const roadWidth = Math.min(width * 0.8, 600);
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.4)';
+      ctx.lineWidth = 1.5;
+
+      // Draw road boundary
+      ctx.beginPath();
+      ctx.moveTo(centerX - 40, horizon);
+      ctx.lineTo(centerX - roadWidth / 2, height);
+      ctx.moveTo(centerX + 40, horizon);
+      ctx.lineTo(centerX + roadWidth / 2, height);
+      ctx.stroke();
+
+      // Moving road lines
+      const lineOffset = (distance % 60) / 60;
+      for (let i = 0; i < 14; i++) {
+        const progress = Math.pow((i + lineOffset) / 14, 2.5);
+        const y = horizon + progress * (height - horizon);
+        const curWidth = 80 + progress * (roadWidth - 80);
+        ctx.beginPath();
+        ctx.moveTo(centerX - curWidth / 2, y);
+        ctx.lineTo(centerX + curWidth / 2, y);
+        ctx.stroke();
+      }
+
+      // Draw Obstacles
+      for (const obs of obstacles) {
+        if (obs.z <= 0) continue;
+        const progress = obs.z;
+        const y = horizon + progress * (height - horizon);
+        const screenX = centerX + obs.x * (progress * 1.8);
+        const w = obs.width * (0.3 + progress * 0.9);
+        const h = obs.height * (0.3 + progress * 0.9);
+
+        ctx.fillStyle = obs.color;
+        ctx.shadowColor = obs.color;
+        ctx.shadowBlur = 15;
+        ctx.fillRect(screenX - w / 2, y - h, w, h);
+        ctx.shadowBlur = 0;
+      }
+
+      // Draw Player Car
+      const carY = height - 110;
+      const carX = centerX + player.x;
+
+      // Underglow
+      ctx.shadowColor = keys.nitro ? '#ff007f' : '#00f0ff';
+      ctx.shadowBlur = 25;
+      ctx.fillStyle = keys.nitro ? '#ff007f' : '#00f0ff';
+      ctx.beginPath();
+      ctx.ellipse(carX, carY + 30, 45, 12, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Car body
+      ctx.fillStyle = '#0a1026';
+      ctx.strokeStyle = keys.nitro ? '#ff007f' : '#00f0ff';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(carX - 45, carY + 25);
+      ctx.lineTo(carX - 30, carY);
+      ctx.lineTo(carX - 15, carY - 20);
+      ctx.lineTo(carX + 15, carY - 20);
+      ctx.lineTo(carX + 30, carY);
+      ctx.lineTo(carX + 45, carY + 25);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Windshield
+      ctx.fillStyle = '#00f0ff';
+      ctx.beginPath();
+      ctx.moveTo(carX - 12, carY - 16);
+      ctx.lineTo(carX + 12, carY - 16);
+      ctx.lineTo(carX + 22, carY - 2);
+      ctx.lineTo(carX - 22, carY - 2);
+      ctx.closePath();
+      ctx.fill();
+
+      // Tail lights
+      ctx.fillStyle = '#ff0055';
+      ctx.shadowColor = '#ff0055';
+      ctx.shadowBlur = 10;
+      ctx.fillRect(carX - 35, carY + 18, 14, 5);
+      ctx.fillRect(carX + 21, carY + 18, 14, 5);
+      ctx.shadowBlur = 0;
+
+      // Particles
+      for (const p of particles) {
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, 4, 4);
+      }
+    }
+
+    function loop(time) {
+      const dt = Math.min(0.1, (time - lastTime) / 1000);
+      lastTime = time;
+      update(dt);
+      render();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
