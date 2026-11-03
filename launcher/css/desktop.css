@@ -1,0 +1,332 @@
+/* ==========================================================================
+   GAMEVERSE - Desktop Gaming Interface
+   Created By Shiv Yogi | Console Command Center with Sidebar & Info Panel
+   ========================================================================== */
+
+@media (min-width: 1025px) {
+  /* Desktop Layout Grid */
+  .desktop-layout-root {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr var(--info-panel-width);
+    grid-template-rows: var(--header-height) 1fr 140px;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Top Navigation Bar */
+  .desktop-header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    background: rgba(5, 8, 20, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 100;
+  }
+
+  .desktop-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .desktop-brand-logo {
+    height: 38px;
+    width: auto;
+  }
+
+  .desktop-header-search {
+    flex: 1;
+    max-width: 360px;
+    margin: 0 40px;
+    position: relative;
+  }
+
+  .desktop-search-input {
+    width: 100%;
+    padding-left: 42px;
+  }
+
+  .desktop-search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0aed6;
+    pointer-events: none;
+  }
+
+  .desktop-header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* Left Navigation Sidebar */
+  .desktop-sidebar {
+    grid-column: 1 / 2;
+    grid-row: 2 / -1;
+    background: rgba(5, 8, 20, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 90;
+  }
+
+  .desktop-nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .desktop-nav-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(160, 174, 214, 0.5);
+    padding: 0 12px;
+    margin: 12px 0 6px 0;
+  }
+
+  .desktop-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #a0aed6;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .desktop-nav-link:hover {
+    color: #ffffff;
+    background: rgba(14, 23, 58, 0.6);
+    border-color: rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.15);
+    transform: translateX(3px);
+  }
+
+  .desktop-nav-link.active {
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(112, 0, 255, 0.2));
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 18px rgba(0, 240, 255, 0.25);
+  }
+
+  .desktop-nav-link .gv-icon {
+    stroke: currentColor;
+  }
+
+  /* Creator branding tag in sidebar bottom */
+  .desktop-sidebar-creator {
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(8, 14, 36, 0.7);
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    text-align: center;
+  }
+
+  .desktop-creator-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(160, 174, 214, 0.7);
+  }
+
+  .desktop-creator-name {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--neon-cyan);
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+
+  /* Central Cover Flow Area */
+  .desktop-center-stage {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Right-Side Game Information Panel */
+  .desktop-info-panel {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    background: rgba(5, 8, 20, 0.65);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-left: 1px solid var(--glass-border);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 90;
+  }
+
+  .desktop-info-hero {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+
+  .desktop-info-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .desktop-info-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #ffffff;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .desktop-info-meta-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .desktop-info-desc {
+    font-size: 14px;
+    color: #a0aed6;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .desktop-specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(10, 16, 40, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .spec-item-label {
+    font-size: 11px;
+    color: rgba(160, 174, 214, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .spec-item-value {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 2px;
+  }
+
+  .desktop-play-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+  }
+
+  /* Bottom Game Library Bar */
+  .desktop-bottom-library {
+    grid-column: 2 / -1;
+    grid-row: 3 / 4;
+    background: rgba(5, 8, 20, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--glass-border);
+    padding: 12px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 80;
+  }
+
+  .desktop-bottom-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .desktop-bottom-title {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #a0aed6;
+  }
+
+  .desktop-thumb-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .desktop-thumb-card {
+    flex-shrink: 0;
+    width: 120px;
+    height: 70px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-fast);
+  }
+
+  .desktop-thumb-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .desktop-thumb-card:hover {
+    border-color: var(--neon-cyan);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
+  }
+
+  .desktop-thumb-card.active {
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+  }
+}

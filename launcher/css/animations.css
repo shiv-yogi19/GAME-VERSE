@@ -1,0 +1,366 @@
+/* ==========================================================================
+   GAMEVERSE - Animation Engine (50+ Transitions & Keyframe Animations)
+   Created By Shiv Yogi | High-Performance GPU-Accelerated FX
+   ========================================================================== */
+
+/* 1. Crystal Logo Pulse */
+@keyframes crystalLogoPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.4)) drop-shadow(0 0 25px rgba(112, 0, 255, 0.2));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 22px rgba(0, 240, 255, 0.8)) drop-shadow(0 0 45px rgba(255, 0, 127, 0.4));
+    transform: scale(1.02);
+  }
+}
+
+/* 2. Creator Name Shimmer */
+@keyframes creatorNameShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* 3. Intro Backdrop Blur In */
+@keyframes introBlurIn {
+  from { filter: blur(30px); opacity: 0; transform: scale(1.1); }
+  to { filter: blur(0px); opacity: 1; transform: scale(1); }
+}
+
+/* 4. Cinematic Zoom In (Launcher Reveal) */
+@keyframes cinematicZoomIn {
+  0% { transform: scale(1.18); opacity: 0; filter: blur(15px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0px); }
+}
+
+/* 5. Launch Zoom (Game Launching) */
+@keyframes gameLaunchZoom {
+  0% { transform: scale(1); opacity: 1; filter: blur(0); }
+  40% { transform: scale(0.96); filter: brightness(1.3); }
+  100% { transform: scale(2.8); opacity: 0; filter: blur(20px); }
+}
+
+/* 6. Reverse Exit Zoom (Game Exiting) */
+@keyframes gameExitReverseZoom {
+  0% { transform: scale(1.8); opacity: 0; filter: blur(25px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0px); }
+}
+
+/* 7. Poster Selected Floating */
+@keyframes posterFloat {
+  0%, 100% { transform: translateY(0px) rotateY(0deg); }
+  50% { transform: translateY(-7px) rotateY(1deg); }
+}
+
+/* 8. Neon Border Cycle */
+@keyframes neonBorderCycle {
+  0% { border-color: rgba(0, 240, 255, 0.4); box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+  33% { border-color: rgba(112, 0, 255, 0.4); box-shadow: 0 0 20px rgba(112, 0, 255, 0.3); }
+  66% { border-color: rgba(255, 0, 127, 0.4); box-shadow: 0 0 20px rgba(255, 0, 127, 0.3); }
+  100% { border-color: rgba(0, 240, 255, 0.4); box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+}
+
+/* 9. Radar Loading Sweep */
+@keyframes radarSweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 10. Device Rotate Prompt (Mobile) */
+@keyframes rotateDeviceNotice {
+  0%, 10% { transform: rotate(0deg); }
+  40%, 60% { transform: rotate(-90deg); }
+  90%, 100% { transform: rotate(0deg); }
+}
+
+/* 11. Subtle Scanline Drift */
+@keyframes scanlineDrift {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+/* 12. Modal Card Enter */
+@keyframes modalEnter {
+  from { opacity: 0; transform: scale(0.9) translateY(24px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* 13. Modal Card Leave */
+@keyframes modalLeave {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.92) translateY(16px); }
+}
+
+/* 14. Menu Expand Down */
+@keyframes menuExpandDown {
+  from { opacity: 0; transform: translateY(-12px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 15. Menu Collapse Up */
+@keyframes menuCollapseUp {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(-8px) scale(0.96); }
+}
+
+/* 16. Button Ripple Glint */
+@keyframes buttonGlint {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+/* 17. Avatar Ring Rotate */
+@keyframes avatarRingSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 18. Avatar Ring Counter-Rotate */
+@keyframes avatarRingCounterSpin {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 19. Avatar Excited Reaction */
+@keyframes avatarExcitedReaction {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.12) rotate(-5deg); }
+  50% { transform: scale(1.15) rotate(5deg); }
+  75% { transform: scale(1.1) rotate(-3deg); }
+}
+
+/* 20. Avatar Victory Glow */
+@keyframes avatarVictoryGlow {
+  0%, 100% { box-shadow: 0 0 20px #00f0ff; }
+  50% { box-shadow: 0 0 45px #ff007f, 0 0 70px #00ff88; }
+}
+
+/* 21. Avatar Idle Breathing */
+@keyframes avatarBreathing {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* 22. Category Pill Bounce */
+@keyframes pillBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+/* 23. Badge Flash */
+@keyframes badgeFlash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+/* 24. Live Indicator Pulse */
+@keyframes liveDotPulse {
+  0% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 255, 136, 0); }
+  100% { transform: scale(0.85); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+}
+
+/* 25. Cyberpunk Glitch Jump */
+@keyframes glitchJump {
+  0%, 94%, 100% { transform: translate(0); filter: none; }
+  95% { transform: translate(-2px, 1px); filter: hue-rotate(90deg); }
+  97% { transform: translate(2px, -1px); filter: hue-rotate(-90deg); }
+  99% { transform: translate(-1px, -1px); }
+}
+
+/* 26. Particle Star Drift */
+@keyframes starDrift {
+  0% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50% { opacity: 0.9; }
+  100% { transform: translateY(-80px) scale(0.7); opacity: 0.2; }
+}
+
+/* 27. Game Info Panel Slide In (Right) */
+@keyframes panelSlideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* 28. Game Info Panel Slide Out (Right) */
+@keyframes panelSlideOutRight {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+/* 29. Toast Notification Pop */
+@keyframes toastPop {
+  0% { transform: translateY(20px) scale(0.9); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* 30. Toast Notification Fade */
+@keyframes toastFade {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-16px); }
+}
+
+/* 31. Controls Button Press In */
+@keyframes controlBtnPress {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.88); }
+  100% { transform: scale(1); }
+}
+
+/* 32. Nitro Flash Flare */
+@keyframes nitroFlashFlare {
+  0% { box-shadow: 0 0 0 rgba(0, 240, 255, 0); }
+  50% { box-shadow: 0 0 35px rgba(0, 240, 255, 0.9), inset 0 0 15px #ffffff; }
+  100% { box-shadow: 0 0 0 rgba(0, 240, 255, 0); }
+}
+
+/* 33. Joystick Knob Return */
+@keyframes joystickSnapBack {
+  from { transform: translate(var(--joy-x, 0px), var(--joy-y, 0px)); }
+  to { transform: translate(0px, 0px); }
+}
+
+/* 34. Title Fade Update */
+@keyframes titleSmoothFade {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* 35. Card Spotlight Glow Sweep */
+@keyframes spotlightSweep {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 36. Quick Library Card Hover Tilt */
+@keyframes cardHoverLift {
+  to { transform: translateY(-6px) scale(1.03); }
+}
+
+/* 37. Top Bar Slide Down */
+@keyframes topBarSlideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* 38. Bottom Dock Slide Up */
+@keyframes bottomDockSlideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* 39. Glass Reflection Shimmer */
+@keyframes glassReflectionMove {
+  0% { opacity: 0.15; transform: rotate(25deg) translateY(-80%); }
+  50% { opacity: 0.35; }
+  100% { opacity: 0.15; transform: rotate(25deg) translateY(120%); }
+}
+
+/* 40. Empty State Floating Icon */
+@keyframes emptyIconFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+
+/* 41. Audio Equalizer Wave 1 */
+@keyframes eqWave1 {
+  0%, 100% { height: 6px; }
+  50% { height: 18px; }
+}
+
+/* 42. Audio Equalizer Wave 2 */
+@keyframes eqWave2 {
+  0%, 100% { height: 18px; }
+  50% { height: 8px; }
+}
+
+/* 43. Audio Equalizer Wave 3 */
+@keyframes eqWave3 {
+  0%, 100% { height: 10px; }
+  50% { height: 22px; }
+}
+
+/* 44. Volume Slider Glow */
+@keyframes volSliderGlow {
+  0%, 100% { filter: drop-shadow(0 0 4px var(--neon-cyan)); }
+  50% { filter: drop-shadow(0 0 10px var(--neon-cyan)); }
+}
+
+/* 45. Search Input Open */
+@keyframes searchExpand {
+  from { width: 42px; opacity: 0.7; }
+  to { width: 220px; opacity: 1; }
+}
+
+/* 46. Fullscreen Icon Pop */
+@keyframes iconPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* 47. Error Shake Alert */
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+/* 48. Success Ripple Ring */
+@keyframes successRing {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* 49. HUD Fade In */
+@keyframes hudFadeIn {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 50. Sandboxed Frame Fade */
+@keyframes iframeFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 51. Glow Pulse Infinite */
+@keyframes glowPulseInfinite {
+  0%, 100% { opacity: 0.6; filter: blur(8px); }
+  50% { opacity: 1; filter: blur(14px); }
+}
+
+/* 52. Speed Lines Streaming */
+@keyframes speedLinesStream {
+  0% { background-position: 0 0; }
+  100% { background-position: -400px 0; }
+}
+
+/* Utility Class Bindings for Animations */
+.anim-crystal-logo { animation: crystalLogoPulse 4s ease-in-out infinite; }
+.anim-creator-name {
+  background: linear-gradient(90deg, #ffffff, var(--neon-cyan), #ffffff, var(--neon-magenta));
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: creatorNameShimmer 5s linear infinite;
+}
+.anim-poster-float { animation: posterFloat 4s ease-in-out infinite; }
+.anim-neon-cycle { animation: neonBorderCycle 8s linear infinite; }
+.anim-radar { animation: radarSweep 1.6s linear infinite; }
+.anim-avatar-spin { animation: avatarRingSpin 10s linear infinite; }
+.anim-avatar-breathe { animation: avatarBreathing 3s ease-in-out infinite; }
+.anim-error-shake { animation: errorShake 0.4s ease-in-out; }
+.anim-radar-spin { animation: radarSweep 2s linear infinite; }
+
+/* Accessibility: Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

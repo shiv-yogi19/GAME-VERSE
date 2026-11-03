@@ -1,0 +1,259 @@
+/* ==========================================================================
+   GAMEVERSE - 3D Apple-Style Cover Flow Carousel
+   Created By Shiv Yogi | True 3D Depth, Perspectives & Reflections
+   ========================================================================== */
+
+.coverflow-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 1100px;
+  -webkit-perspective: 1100px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.coverflow-viewport:active {
+  cursor: grabbing;
+}
+
+/* 3D Stage Container */
+.coverflow-stage {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform var(--transition-normal);
+}
+
+/* Base Cover Item */
+.coverflow-card {
+  position: absolute;
+  width: 280px;
+  height: 420px;
+  border-radius: 20px;
+  transform-origin: 50% 50%;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, filter, opacity;
+  cursor: pointer;
+}
+
+/* Poster Artwork Frame */
+.coverflow-poster-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #090e24;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  /* Reflection floor */
+  -webkit-box-reflect: below 6px linear-gradient(transparent 72%, rgba(0, 0, 0, 0.45));
+}
+
+.coverflow-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* Video Preview Container (selected game only) */
+.coverflow-video-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.coverflow-video-preview.playing {
+  opacity: 1;
+}
+
+/* Specular Light Sweep on Poster */
+.coverflow-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.18) 0%, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   Stack States (Calculated & Applied via Transform or State Classes)
+   ========================================================================== */
+
+/* Active / Center Selected Poster */
+.coverflow-card.active {
+  z-index: 100;
+  filter: blur(0px) brightness(1.05);
+  opacity: 1;
+  border-color: rgba(0, 240, 255, 0.6);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    0 0 35px rgba(0, 240, 255, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.coverflow-card.active .coverflow-poster-wrap {
+  border: 2px solid var(--neon-cyan);
+}
+
+/* Floating animation on center item */
+.coverflow-card.active.floating {
+  animation: posterFloat 4.5s ease-in-out infinite;
+}
+
+/* Side Posters */
+.coverflow-card.stack-left {
+  filter: blur(1.5px) brightness(0.65);
+  opacity: 0.82;
+}
+
+.coverflow-card.stack-right {
+  filter: blur(1.5px) brightness(0.65);
+  opacity: 0.82;
+}
+
+.coverflow-card.hidden-stack {
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(5px);
+}
+
+/* Navigation Arrow Controls */
+.coverflow-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 150;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(10, 16, 40, 0.7);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  transition: all var(--transition-fast);
+}
+
+.coverflow-nav-btn.prev {
+  left: 32px;
+}
+
+.coverflow-nav-btn.next {
+  right: 32px;
+}
+
+.coverflow-nav-btn:hover {
+  background: rgba(20, 32, 70, 0.9);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 24px rgba(0, 240, 255, 0.4);
+  transform: translateY(-50%) scale(1.1);
+  color: var(--neon-cyan);
+}
+
+.coverflow-nav-btn:disabled {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* Selected Game Title & Meta Display Below Cover Flow */
+.coverflow-meta-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 14px;
+  z-index: 120;
+  pointer-events: auto;
+  transition: opacity 0.3s ease;
+}
+
+.coverflow-meta-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+  margin-bottom: 6px;
+}
+
+.coverflow-meta-tags {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #a0aed6;
+  letter-spacing: 1px;
+}
+
+.coverflow-meta-badge {
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  color: var(--neon-cyan);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.coverflow-action-row {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Keyboard Navigation Indicators */
+.coverflow-key-hints {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: rgba(160, 174, 214, 0.6);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.key-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  margin-right: 4px;
+}

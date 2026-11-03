@@ -1,0 +1,217 @@
+/* ==========================================================================
+   GAMEVERSE - Main Foundation & Design Tokens
+   Created By Shiv Yogi | Premium Installable Gaming Launcher
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --bg-core: #02040a;
+  --bg-deep: #050814;
+  --bg-surface: #0a0f26;
+  --bg-elevated: #111a3b;
+  
+  /* Brand & Neon Highlights */
+  --neon-cyan: #00f0ff;
+  --neon-purple: #7000ff;
+  --neon-magenta: #ff007f;
+  --neon-emerald: #00ff88;
+  --neon-amber: #ffb700;
+  --neon-blue: #3b82f6;
+
+  /* Liquid Glass Values */
+  --glass-bg: rgba(10, 16, 40, 0.65);
+  --glass-bg-hover: rgba(16, 26, 60, 0.8);
+  --glass-border: rgba(0, 240, 255, 0.18);
+  --glass-border-light: rgba(255, 255, 255, 0.12);
+  --glass-border-hover: rgba(0, 240, 255, 0.45);
+  --glass-blur: blur(24px);
+  --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+  /* Typography */
+  --font-display: 'Orbitron', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-ui: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Layout & Sizing */
+  --header-height: 64px;
+  --sidebar-width: 240px;
+  --sidebar-width-collapsed: 72px;
+  --info-panel-width: 380px;
+  
+  /* Transitions */
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* CSS Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-core);
+  color: #ffffff;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.5;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Background Atmosphere */
+#app-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 20%, #0e173a 0%, #050814 50%, #02040a 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ambient dynamic background lighting canvas */
+#ambient-glow-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+  transition: opacity var(--transition-slow);
+}
+
+/* Sub-grid overlay */
+.cyber-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+
+/* Common Interactive Elements */
+button, input, select {
+  font-family: inherit;
+  color: inherit;
+  outline: none;
+  border: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* SVG Icon Base */
+.gv-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  transition: transform var(--transition-fast), stroke var(--transition-fast);
+  flex-shrink: 0;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(2, 4, 10, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.25);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan);
+}
+
+/* Orientation Prompt Overlay (Mobile Portrait) */
+#orientation-prompt {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(2, 4, 10, 0.95);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+#orientation-prompt.visible {
+  display: flex;
+}
+
+.orientation-device-icon {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 24px;
+  animation: rotateDeviceNotice 2.5s ease-in-out infinite;
+}
+
+.orientation-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.orientation-desc {
+  font-size: 15px;
+  color: #a0aed6;
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+.orientation-override-btn {
+  margin-top: 24px;
+  padding: 10px 24px;
+  border-radius: 20px;
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Screen Reader / Utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

@@ -1,0 +1,168 @@
+/* ==========================================================================
+   GAMEVERSE - Mobile Landscape Gaming Layout
+   Created By Shiv Yogi | Optimized for Handheld Gaming Consoles & Smartphones
+   ========================================================================== */
+
+/* Mobile Landscape Constraints & Styling */
+@media (max-width: 1024px) and (orientation: landscape) {
+  :root {
+    --header-height: 52px;
+  }
+
+  #app-root {
+    height: 100vh;
+    height: 100dvh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* Compact Top Bar for Landscape */
+  .gv-mobile-topbar {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 100;
+    background: rgba(5, 8, 20, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .gv-mobile-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+  }
+
+  .gv-mobile-brand img {
+    height: 28px;
+    width: auto;
+  }
+
+  .gv-mobile-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Main Handheld Carousel Zone */
+  .mobile-main-layout {
+    flex: 1;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .coverflow-viewport {
+    perspective: 800px;
+    -webkit-perspective: 800px;
+  }
+
+  .coverflow-stage {
+    height: 260px;
+  }
+
+  .coverflow-card {
+    width: 165px;
+    height: 245px;
+  }
+
+  .coverflow-meta-display {
+    margin-top: 4px;
+  }
+
+  .coverflow-meta-title {
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
+  }
+
+  .coverflow-meta-tags {
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .coverflow-action-row {
+    margin-top: 8px;
+    gap: 8px;
+  }
+
+  .coverflow-action-row .gv-btn {
+    padding: 7px 16px;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .coverflow-nav-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .coverflow-nav-btn.prev {
+    left: 12px;
+  }
+
+  .coverflow-nav-btn.next {
+    right: 12px;
+  }
+
+  /* Compact Landscape Bottom Dock for Categories & Recent Games */
+  .gv-mobile-bottom-dock {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background: rgba(5, 8, 20, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--glass-border);
+    z-index: 90;
+  }
+
+  .gv-category-scroll {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 4px 0;
+  }
+
+  .gv-category-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gv-category-btn {
+    white-space: nowrap;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 14px;
+    background: rgba(14, 23, 58, 0.6);
+    border: 1px solid var(--glass-border);
+    color: #a0aed6;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .gv-category-btn.active {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(112, 0, 255, 0.3));
+    border-color: var(--neon-cyan);
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+  }
+}
+
+/* Mobile Portrait Handling (Rotation Reminder Prompt) */
+@media (max-width: 900px) and (orientation: portrait) {
+  #orientation-prompt {
+    display: flex;
+  }
+}
