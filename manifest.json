@@ -1,0 +1,19 @@
+{
+  "name": "GAMEVERSE - Premium Gaming Launcher",
+  "short_name": "GAMEVERSE",
+  "description": "Futuristic Liquid Glass Gaming Launcher created by Shiv Yogi",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "landscape-primary",
+  "background_color": "#02040a",
+  "theme_color": "#050814",
+  "categories": ["games", "entertainment", "utilities"],
+  "icons": [
+    {
+      "src": "assets/logo/gameverse-symbol.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

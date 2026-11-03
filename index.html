@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#050814">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="GAMEVERSE - Premium Installable Gaming Launcher Created By Shiv Yogi">
+
+  <title>GAMEVERSE | Premium Gaming Launcher by Shiv Yogi</title>
+
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/gameverse-symbol.svg">
+  <link rel="apple-touch-icon" href="assets/logo/gameverse-symbol.svg">
+
+  <!-- Futuristic Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Core & Glass UI Stylesheets -->
+  <link rel="stylesheet" href="launcher/css/main.css">
+  <link rel="stylesheet" href="launcher/css/glass-ui.css">
+  <link rel="stylesheet" href="launcher/css/animations.css">
+  <link rel="stylesheet" href="launcher/css/carousel.css">
+  <link rel="stylesheet" href="launcher/css/mobile.css">
+  <link rel="stylesheet" href="launcher/css/desktop.css">
+
+  <!-- Component Stylesheets -->
+  <link rel="stylesheet" href="launcher/components/intro/intro.css">
+  <link rel="stylesheet" href="launcher/components/welcome/welcome.css">
+  <link rel="stylesheet" href="launcher/components/carousel/coverflow.css">
+  <link rel="stylesheet" href="launcher/components/profile/profile.css">
+  <link rel="stylesheet" href="launcher/components/controls/controls-overlay.css">
+  <link rel="stylesheet" href="launcher/components/player/player-screen.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. CINEMATIC INTRO OPENING EXPERIENCE
+       ======================================================================== -->
+  <section id="cinematic-intro" aria-label="GameVerse Opening Animation">
+    <canvas id="intro-particle-canvas"></canvas>
+    <div class="intro-content-overlay">
+      <h1 class="intro-title-gameverse">GAMEVERSE</h1>
+      <div class="intro-creator-wrap">
+        <span class="intro-creator-pre">CREATED BY</span>
+        <span class="intro-creator-name">SHIV YOGI</span>
+      </div>
+      <div class="intro-loader-bar">
+        <div class="intro-loader-progress"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       2. FIRST-TIME PLAYER REGISTRATION SCREEN
+       ======================================================================== -->
+  <section id="welcome-registration-screen" aria-label="Player Registration">
+    <div class="welcome-glass-card">
+      <div class="welcome-avatar-preview anim-crystal-logo">
+        <img src="assets/gifs/avatar-cyber.svg" alt="Cyber Avatar" />
+      </div>
+      <h2 class="welcome-title">WELCOME TO GAMEVERSE</h2>
+      <p class="welcome-subtitle">Enter your commander gaming tag to calibrate your custom console profile and neural saves.</p>
+      
+      <div class="welcome-form">
+        <div class="welcome-input-wrap">
+          <input type="text" id="welcome-player-name-input" class="gv-input" placeholder="PLAYER GAMING NAME" maxlength="20" autocomplete="off" />
+        </div>
+        <div class="welcome-validation-msg" id="welcome-error-msg">Player name must be at least 2 characters</div>
+        <button id="welcome-continue-btn" class="gv-btn gv-btn-primary welcome-continue-btn">
+          ENTER CONSOLE ✦
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       APP ROOT & MAIN LAUNCHER
+       ======================================================================== -->
+  <div id="app-root">
+    <!-- Ambient Dynamic Nebula & Cyber Grid Canvas -->
+    <canvas id="ambient-glow-canvas"></canvas>
+    <div class="cyber-grid-overlay"></div>
+
+    <!-- MAIN LAUNCHER SCREEN (Initially hidden until Intro completes) -->
+    <main id="main-launcher-screen" class="sr-only">
+      
+      <!-- ====================================================================
+           DESKTOP INTERFACE LAYOUT (min-width: 1025px)
+           ==================================================================== -->
+      <div class="desktop-layout-root">
+        
+        <!-- Desktop Header -->
+        <header class="desktop-header">
+          <div class="desktop-brand">
+            <img src="assets/logo/gameverse-logo.svg" alt="GAMEVERSE by Shiv Yogi" class="desktop-brand-logo" />
+          </div>
+
+          <div class="desktop-header-search">
+            <svg class="gv-icon desktop-search-icon" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" class="gv-input desktop-search-input" id="desktop-search-input" placeholder="Search universe games, categories..." />
+          </div>
+
+          <div class="desktop-header-right">
+            <!-- PWA Install Button -->
+            <button class="gv-btn gv-btn-secondary gv-pwa-install-btn" style="display: none;">
+              <svg class="gv-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              INSTALL APP
+            </button>
+
+            <!-- Sound Toggle -->
+            <button class="gv-btn-icon gv-sound-toggle-btn" title="Toggle Audio Sound">
+              <svg class="gv-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </button>
+
+            <!-- Control Settings (Three-Dot Menu) -->
+            <button class="gv-btn-icon open-control-menu-btn" id="three-dot-menu-btn" title="Settings & Controls">
+              <svg class="gv-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"></circle><circle cx="19" cy="12" r="1.5"></circle><circle cx="5" cy="12" r="1.5"></circle></svg>
+            </button>
+
+            <!-- Player Profile Avatar Button -->
+            <button class="gv-btn gv-btn-secondary open-profile-btn" id="topbar-profile-btn">
+              <img src="assets/gifs/avatar-cyber.svg" alt="Avatar" class="player-avatar-img" style="width: 24px; height: 24px; border-radius: 50%;" />
+              <span class="player-name-display">Commander</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Desktop Sidebar -->
+        <aside class="desktop-sidebar">
+          <div class="desktop-nav-group">
+            <span class="desktop-nav-title">Navigation</span>
+            <button class="desktop-nav-link active" data-filter="all">
+              <svg class="gv-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              All Games
+            </button>
+            <button class="desktop-nav-link" data-filter="featured">
+              <svg class="gv-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              Featured
+            </button>
+            <button class="desktop-nav-link" data-filter="favorites">
+              <svg class="gv-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              Favorites
+            </button>
+            <button class="desktop-nav-link" data-filter="recent">
+              <svg class="gv-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Recently Played
+            </button>
+          </div>
+
+          <div class="desktop-nav-group">
+            <span class="desktop-nav-title">Console</span>
+            <button class="desktop-nav-link" data-filter="profile" id="sidebar-profile-link">
+              <svg class="gv-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              Player Profile
+            </button>
+            <button class="desktop-nav-link open-control-menu-btn">
+              <svg class="gv-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              Settings & Audio
+            </button>
+          </div>
+
+          <div class="desktop-sidebar-creator">
+            <div class="desktop-creator-label">Architect & Creator</div>
+            <div class="desktop-creator-name">SHIV YOGI</div>
+          </div>
+        </aside>
+
+        <!-- Desktop Center Stage (3D Cover Flow) -->
+        <section class="desktop-center-stage">
+          <!-- 3D Carousel Viewport -->
+          <div class="coverflow-viewport">
+            <button class="coverflow-nav-btn prev" id="coverflow-prev-btn" aria-label="Previous Game">
+              <svg class="gv-icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+
+            <div class="coverflow-stage">
+              <!-- Dynamically populated 3D cards -->
+            </div>
+
+            <button class="coverflow-nav-btn next" id="coverflow-next-btn" aria-label="Next Game">
+              <svg class="gv-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+
+          <!-- Selected Game Meta & Actions Below Carousel -->
+          <div class="coverflow-meta-display">
+            <h2 class="coverflow-meta-title" id="coverflow-title-display">Cyber Neon Overdrive</h2>
+            <div class="coverflow-meta-tags">
+              <span class="coverflow-meta-badge" id="coverflow-category-badge">ARCADE</span>
+              <span id="coverflow-rating-badge" style="color: #ffd700; font-weight: bold;">★ 4.9</span>
+            </div>
+            <div class="coverflow-action-row">
+              <button class="gv-btn gv-btn-primary gv-btn-play-game" id="coverflow-play-btn">
+                <svg class="gv-icon" viewBox="0 0 24 24" style="stroke: #02040a; fill: #02040a;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                PLAY NOW
+              </button>
+              <button class="gv-btn-icon gv-btn-favorite" id="coverflow-fav-btn" title="Add to Favorites">
+                <svg class="gv-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              </button>
+            </div>
+            <div class="coverflow-key-hints">
+              <span><span class="key-badge">◀</span><span class="key-badge">▶</span> Navigate</span>
+              <span><span class="key-badge">ENTER</span> Launch</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Desktop Right-Side Game Info Panel -->
+        <aside class="desktop-info-panel">
+          <div class="desktop-info-hero">
+            <img src="assets/posters/cyber-neon-overdrive.svg" alt="Preview Poster" class="desktop-info-hero-img" id="desktop-info-hero-img" />
+          </div>
+
+          <h3 class="desktop-info-title" id="desktop-info-title">Cyber Neon Overdrive</h3>
+
+          <div class="desktop-info-meta-chips">
+            <span class="gv-pill" id="desktop-info-category">ARCADE</span>
+            <span class="gv-pill" style="color: #ffd700; border-color: rgba(255, 215, 0, 0.3);" id="desktop-info-rating">★ 4.9</span>
+            <span class="gv-pill" style="color: #00ff88; border-color: rgba(0, 255, 136, 0.3);" id="desktop-info-control">RACING</span>
+          </div>
+
+          <p class="desktop-info-desc" id="desktop-info-desc">
+            High-velocity cybernetic speedway challenge. Dodge laser obstacles, engage nitro boosters, and break supersonic sound barriers in a retro-futuristic metropolis.
+          </p>
+
+          <div class="desktop-specs-grid">
+            <div class="spec-item">
+              <div class="spec-item-label">Players</div>
+              <div class="spec-item-value" id="desktop-info-players">1 Player</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-item-label">Size</div>
+              <div class="spec-item-value" id="desktop-info-size">2.8 MB</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-item-label">Version</div>
+              <div class="spec-item-value" id="desktop-info-version">1.4.0</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-item-label">Status</div>
+              <div class="spec-item-value" style="color: #00ff88;">Ready to Play</div>
+            </div>
+          </div>
+
+          <div class="desktop-play-actions">
+            <button class="gv-btn gv-btn-primary gv-btn-play-game" id="desktop-play-btn" style="width: 100%;">
+              <svg class="gv-icon" viewBox="0 0 24 24" style="stroke: #02040a; fill: #02040a;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              LAUNCH GAME
+            </button>
+            <button class="gv-btn gv-btn-secondary gv-btn-favorite" id="desktop-fav-btn" style="width: 100%;">
+              <svg class="gv-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              FAVORITE
+            </button>
+          </div>
+        </aside>
+
+        <!-- Desktop Bottom Library Drawer -->
+        <footer class="desktop-bottom-library">
+          <div class="desktop-bottom-header">
+            <span class="desktop-bottom-title">Quick Catalog</span>
+            <div class="gv-category-scroll" id="desktop-categories-row">
+              <!-- Dynamically populated category buttons -->
+            </div>
+          </div>
+          <div class="desktop-thumb-row" id="desktop-bottom-thumbs">
+            <!-- Dynamically populated game thumbnails -->
+          </div>
+        </footer>
+
+      </div>
+
+      <!-- ====================================================================
+           MOBILE LANDSCAPE INTERFACE LAYOUT (max-width: 1024px)
+           ==================================================================== -->
+      <div class="mobile-layout-root">
+        
+        <!-- Mobile Topbar -->
+        <header class="gv-mobile-topbar">
+          <div class="gv-mobile-brand">
+            <img src="assets/logo/gameverse-logo.svg" alt="GAMEVERSE" />
+          </div>
+
+          <div class="gv-mobile-top-actions">
+            <button class="gv-btn-icon gv-sound-toggle-btn" title="Toggle Sound">
+              <svg class="gv-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </button>
+            <button class="gv-btn-icon open-profile-btn" title="Player Profile">
+              <img src="assets/gifs/avatar-cyber.svg" alt="Avatar" class="player-avatar-img" style="width: 24px; height: 24px; border-radius: 50%;" />
+            </button>
+            <button class="gv-btn-icon open-control-menu-btn" id="mobile-three-dot-btn" title="Menu">
+              <svg class="gv-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"></circle><circle cx="19" cy="12" r="1.5"></circle><circle cx="5" cy="12" r="1.5"></circle></svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- Mobile Main 3D Carousel Area (Mirrors coverflow) -->
+        <div class="mobile-main-layout">
+          <!-- Central carousel is shared in DOM via CoverFlow engine -->
+        </div>
+
+        <!-- Mobile Bottom Dock (Categories) -->
+        <footer class="gv-mobile-bottom-dock">
+          <div class="gv-category-scroll" id="mobile-categories-row">
+            <!-- Dynamically populated categories -->
+          </div>
+        </footer>
+
+      </div>
+
+    </main>
+
+    <!-- ====================================================================
+         IN-GAME SESSION VIEWPORT
+         ==================================================================== -->
+    <section id="game-player-container" aria-label="Game Screen">
+      <!-- HUD Top Toolbar -->
+      <div id="game-player-hud">
+        <button class="hud-btn hud-btn-exit" id="hud-exit-btn" title="Exit Game">
+          <svg class="gv-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          EXIT
+        </button>
+        <button class="hud-btn" id="hud-restart-btn" title="Restart Game">
+          <svg class="gv-icon" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        </button>
+        <button class="hud-btn" id="hud-pause-btn" title="Pause Game">
+          <svg class="gv-icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+        </button>
+        <button class="hud-btn" id="hud-controls-btn" title="Toggle On-Screen Touch Controls">
+          <svg class="gv-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><line x1="6" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line></svg>
+        </button>
+        <button class="hud-btn" id="hud-sound-btn" title="Toggle Sound">
+          <svg class="gv-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+        </button>
+        <button class="hud-btn" id="hud-fullscreen-btn" title="Toggle Fullscreen">
+          <svg class="gv-icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+      </div>
+
+      <!-- Sandboxed Game Iframe Mount -->
+      <div id="game-iframe-wrapper"></div>
+
+      <!-- Universal On-Screen Touch Controls HUD -->
+      <div id="touch-controls-hud"></div>
+    </section>
+
+    <!-- Game Launch Loader Screen -->
+    <div id="game-launch-loader">
+      <div class="loader-radar-ring"></div>
+      <div class="loader-game-title" id="loader-game-title">Launching Game...</div>
+      <div class="loader-status-text">INITIALIZING QUANTUM RUNTIME</div>
+    </div>
+
+  </div>
+
+  <!-- ========================================================================
+       MODALS & DRAWERS
+       ======================================================================== -->
+
+  <!-- PLAYER PROFILE MODAL -->
+  <div class="gv-modal-backdrop" id="profile-modal">
+    <div class="gv-modal-card">
+      <div class="gv-modal-header">
+        <h3 class="gv-modal-title">
+          <svg class="gv-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          PLAYER PROFILE
+        </h3>
+        <button class="gv-modal-close" id="profile-modal-close">
+          <svg class="gv-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="profile-avatar-container">
+        <div class="profile-avatar-glow-ring">
+          <img src="assets/gifs/avatar-cyber.svg" alt="Animated Avatar" class="profile-avatar-large" />
+        </div>
+        <div class="profile-player-title">
+          <span class="player-name-display">Commander</span>
+          <button class="profile-edit-name-toggle" id="profile-edit-name-btn" title="Edit Name">
+            <svg class="gv-icon" viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          </button>
+        </div>
+        <span class="profile-player-badge">PREMIUM CONSOLE OPERATOR</span>
+
+        <div class="profile-edit-box" id="profile-edit-wrap">
+          <input type="text" id="profile-name-input" class="gv-input" placeholder="New Player Name" maxlength="20" />
+          <button class="gv-btn gv-btn-primary" id="profile-save-name-btn">SAVE</button>
+        </div>
+      </div>
+
+      <div class="profile-stats-grid">
+        <div class="profile-stat-card">
+          <div class="profile-stat-num player-games-count">0</div>
+          <div class="profile-stat-lbl">Games Played</div>
+        </div>
+        <div class="profile-stat-card">
+          <div class="profile-stat-num player-playtime-display">0m</div>
+          <div class="profile-stat-lbl">Time Played</div>
+        </div>
+        <div class="profile-stat-card">
+          <div class="profile-stat-num player-launches-display">0</div>
+          <div class="profile-stat-lbl">Total Launches</div>
+        </div>
+      </div>
+
+      <div class="profile-section-heading">
+        <svg class="gv-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        Favorites
+      </div>
+      <div class="profile-history-grid" id="profile-favorites-list"></div>
+
+      <div class="profile-section-heading">
+        <svg class="gv-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        Recent Activity
+      </div>
+      <div class="profile-history-grid" id="profile-recent-list"></div>
+    </div>
+  </div>
+
+  <!-- THREE-DOT GLASS MENU DRAWER -->
+  <div id="three-dot-menu-drawer" class="glass-panel" style="position: fixed; top: 68px; right: 24px; width: 260px; z-index: 10000; display: none; padding: 12px; flex-direction: column; gap: 4px;">
+    <button class="gv-btn gv-btn-secondary" id="menu-item-joystick" style="justify-content: flex-start; width: 100%;">
+      <svg class="gv-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>
+      Joystick Settings
+    </button>
+    <button class="gv-btn gv-btn-secondary" id="menu-item-racing" style="justify-content: flex-start; width: 100%;">
+      <svg class="gv-icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path><path d="m12 6-2 6 6-2z"></path></svg>
+      Racing Controls
+    </button>
+    <button class="gv-btn gv-btn-secondary" id="menu-item-action" style="justify-content: flex-start; width: 100%;">
+      <svg class="gv-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+      Action Controls
+    </button>
+    <button class="gv-btn gv-btn-secondary" id="menu-item-sensitivity" style="justify-content: flex-start; width: 100%;">
+      <svg class="gv-icon" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line></svg>
+      Sensitivity
+    </button>
+    <button class="gv-btn gv-btn-secondary" id="menu-item-buttons" style="justify-content: flex-start; width: 100%;">
+      <svg class="gv-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+      Button Customization
+    </button>
+    <button class="gv-btn gv-btn-secondary" id="menu-item-sound" style="justify-content: flex-start; width: 100%;">
+      <svg class="gv-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+      Sound Settings
+    </button>
+    <button class="gv-btn gv-btn-secondary" id="menu-item-ui" style="justify-content: flex-start; width: 100%;">
+      <svg class="gv-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line></svg>
+      UI Settings
+    </button>
+    <div class="gv-divider"></div>
+    <button class="gv-btn gv-btn-danger" id="menu-item-reset" style="justify-content: flex-start; width: 100%;">
+      <svg class="gv-icon" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+      Reset Controls
+    </button>
+    <button class="gv-btn gv-btn-secondary" id="menu-item-about" style="justify-content: flex-start; width: 100%;">
+      <svg class="gv-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+      About GameVerse
+    </button>
+  </div>
+
+  <style>
+    #three-dot-menu-drawer.open {
+      display: flex !important;
+      animation: menuExpandDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+
+  <!-- CONTROLS & SYSTEM SETTINGS MODAL -->
+  <div class="gv-modal-backdrop" id="control-settings-modal">
+    <div class="gv-modal-card">
+      <div class="gv-modal-header">
+        <h3 class="gv-modal-title">
+          <svg class="gv-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          SYSTEM & CONTROLS
+        </h3>
+        <button class="gv-modal-close" id="control-settings-close">
+          <svg class="gv-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- Settings Navigation Tabs -->
+      <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px;">
+        <button class="gv-btn gv-btn-secondary settings-tab-btn active" data-tab="joystick">JOYSTICK</button>
+        <button class="gv-btn gv-btn-secondary settings-tab-btn" data-tab="buttons">BUTTONS</button>
+        <button class="gv-btn gv-btn-secondary settings-tab-btn" data-tab="sensitivity">SENSITIVITY</button>
+        <button class="gv-btn gv-btn-secondary settings-tab-btn" data-tab="sound">SOUND</button>
+        <button class="gv-btn gv-btn-secondary settings-tab-btn" data-tab="ui">UI & GRAPHICS</button>
+      </div>
+
+      <!-- Tab Panes -->
+      <div class="settings-tab-pane active" data-tab="joystick">
+        <div class="gv-slider-container">
+          <div class="gv-slider-label">
+            <span>Analog Stick Sensitivity</span>
+            <span id="val-joystick-sens">100%</span>
+          </div>
+          <input type="range" class="gv-slider" id="slider-joystick-sens" min="40" max="200" value="100" />
+        </div>
+        <div class="gv-slider-container">
+          <div class="gv-slider-label">
+            <span>Inner Deadzone</span>
+            <span id="val-joystick-deadzone">12%</span>
+          </div>
+          <input type="range" class="gv-slider" id="slider-joystick-deadzone" min="0" max="35" value="12" />
+        </div>
+      </div>
+
+      <div class="settings-tab-pane" data-tab="buttons" style="display: none;">
+        <div class="gv-slider-container">
+          <div class="gv-slider-label">
+            <span>Touch Button Size</span>
+            <span id="val-btn-size">64px</span>
+          </div>
+          <input type="range" class="gv-slider" id="slider-btn-size" min="44" max="96" value="64" />
+        </div>
+        <div class="gv-slider-container">
+          <div class="gv-slider-label">
+            <span>Touch Button Opacity</span>
+            <span id="val-btn-opacity">85%</span>
+          </div>
+          <input type="range" class="gv-slider" id="slider-btn-opacity" min="20" max="100" value="85" />
+        </div>
+      </div>
+
+      <div class="settings-tab-pane" data-tab="sensitivity" style="display: none;">
+        <p style="font-size: 14px; color: #a0aed6; margin-bottom: 16px;">
+          Calibrates multi-axis analog response curves across Racing steering paddles, virtual action sticks, and touchpad swipe velocities.
+        </p>
+        <div class="gv-slider-container">
+          <div class="gv-slider-label">
+            <span>Overall Touch Sensitivity</span>
+            <span>Balanced</span>
+          </div>
+          <input type="range" class="gv-slider" min="50" max="150" value="100" />
+        </div>
+      </div>
+
+      <div class="settings-tab-pane" data-tab="sound" style="display: none;">
+        <div class="gv-slider-container">
+          <div class="gv-slider-label">
+            <span>Master Console Volume</span>
+            <span id="val-master-volume">80%</span>
+          </div>
+          <input type="range" class="gv-slider" id="slider-master-volume" min="0" max="100" value="80" />
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 14px;">
+          <span style="font-size: 14px; font-weight: 600;">Tactile UI Chimes & SFX</span>
+          <input type="checkbox" id="toggle-ui-sound" checked style="width: 20px; height: 20px; accent-color: var(--neon-cyan);" />
+        </div>
+      </div>
+
+      <div class="settings-tab-pane" data-tab="ui" style="display: none;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+          <span style="font-size: 14px; font-weight: 600;">Liquid Glass Backdrop Blur</span>
+          <input type="checkbox" id="toggle-liquid-blur" checked style="width: 20px; height: 20px; accent-color: var(--neon-cyan);" />
+        </div>
+        <p style="font-size: 13px; color: #a0aed6;">Disable blur if running on low-power devices to maintain 60 FPS.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <style>
+    .settings-tab-pane.active {
+      display: block !important;
+    }
+  </style>
+
+  <!-- ABOUT GAMEVERSE MODAL -->
+  <div class="gv-modal-backdrop" id="about-gameverse-modal">
+    <div class="gv-modal-card" style="text-align: center;">
+      <div class="welcome-avatar-preview anim-crystal-logo" style="margin: 0 auto 16px;">
+        <img src="assets/logo/gameverse-symbol.svg" alt="GameVerse Emblem" />
+      </div>
+      <h3 style="font-family: var(--font-display); font-size: 24px; font-weight: 900; letter-spacing: 2px;">GAMEVERSE</h3>
+      <p style="font-size: 14px; color: var(--neon-cyan); letter-spacing: 3px; font-weight: 700; margin-bottom: 14px;">
+        CREATED BY SHIV YOGI
+      </p>
+      <p style="font-size: 14px; color: #a0aed6; line-height: 1.6; margin-bottom: 20px;">
+        Next-Generation Installable Gaming Launcher built for GitHub Pages hosting. Designed with high-performance 3D Apple-style Cover Flow, zero-latency Web Audio synthesis, and an expandable modular architecture.
+      </p>
+      <div class="desktop-specs-grid" style="text-align: left; margin-bottom: 20px;">
+        <div><div class="spec-item-label">Version</div><div class="spec-item-value">v1.0.0 Stable</div></div>
+        <div><div class="spec-item-label">Architecture</div><div class="spec-item-value">Vanilla Web Standards</div></div>
+        <div><div class="spec-item-label">Hosting</div><div class="spec-item-value">GitHub Pages Ready</div></div>
+        <div><div class="spec-item-label">PWA Mode</div><div class="spec-item-value">Standalone Console</div></div>
+      </div>
+      <button class="gv-btn gv-btn-primary" onclick="document.getElementById('about-gameverse-modal').classList.remove('open')">
+        CLOSE INTEL
+      </button>
+    </div>
+  </div>
+
+  <!-- MISSING GAME MODAL (Graceful Missing File Detection) -->
+  <div class="gv-modal-backdrop" id="missing-game-modal">
+    <div class="gv-modal-card" style="text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 12px;">⚠️</div>
+      <h3 style="font-family: var(--font-display); font-size: 22px; font-weight: 900; color: #ff0055;">GAME FILES NOT INSTALLED</h3>
+      <p style="font-size: 14px; color: #ffffff; margin-top: 8px;">
+        <strong id="missing-game-name">Selected Game</strong> files were not found at:
+      </p>
+      <code id="missing-game-path" style="display: block; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 8px; color: #00f0ff; margin: 12px 0; font-family: var(--font-mono); font-size: 12px; word-break: break-all;"></code>
+      <p style="font-size: 13px; color: #a0aed6; line-height: 1.5; margin-bottom: 20px;">
+        To install this game, add its files to the indicated directory inside <code>Games/</code>. You can test the launcher right now with the verified <strong>Cyber Neon Overdrive</strong> demo game!
+      </p>
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button class="gv-btn gv-btn-secondary" id="missing-game-close">CANCEL</button>
+        <button class="gv-btn gv-btn-primary" id="missing-game-action">PLAY VERIFIED DEMO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE ORIENTATION PROMPT OVERLAY -->
+  <div id="orientation-prompt">
+    <svg class="orientation-device-icon" viewBox="0 0 24 24" fill="none" stroke="var(--neon-cyan)" stroke-width="2">
+      <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+      <line x1="12" y1="18" x2="12.01" y2="18"></line>
+    </svg>
+    <div class="orientation-title">PLEASE ROTATE DEVICE</div>
+    <div class="orientation-desc">GAMEVERSE is engineered for an authentic handheld landscape console experience. Rotate your phone to landscape mode.</div>
+    <button class="orientation-override-btn" id="orientation-override-btn">CONTINUE IN PORTRAIT</button>
+  </div>
+
+  <!-- FLOATING TOAST NOTIFICATION -->
+  <div id="gv-toast" style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(5,8,20,0.9); border: 1px solid var(--neon-cyan); box-shadow: 0 0 20px rgba(0,240,255,0.4); padding: 10px 24px; border-radius: 20px; font-size: 13px; font-weight: bold; color: #fff; z-index: 99999; opacity: 0; pointer-events: none; transition: all 0.3s ease;"></div>
+  <style>
+    #gv-toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+
+  <!-- ========================================================================
+       APPLICATION SCRIPTS
+       ======================================================================== -->
+  <script src="launcher/storage-manager.js"></script>
+  <script src="launcher/audio-manager.js"></script>
+  <script src="launcher/game-registry.js"></script>
+  <script src="launcher/game-controls.js"></script>
+  <script src="launcher/game-loader.js"></script>
+  <script src="launcher/profile-manager.js"></script>
+
+  <!-- Components -->
+  <script src="launcher/components/intro/intro.js"></script>
+  <script src="launcher/components/welcome/welcome.js"></script>
+  <script src="launcher/components/carousel/coverflow.js"></script>
+  <script src="launcher/components/profile/profile.js"></script>
+  <script src="launcher/components/controls/controls-overlay.js"></script>
+  <script src="launcher/components/player/player-screen.js"></script>
+
+  <!-- Master Orchestrator -->
+  <script src="launcher/launcher.js"></script>
+</body>
+</html>
