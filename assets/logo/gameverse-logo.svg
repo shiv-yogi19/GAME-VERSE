@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="primaryGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="50%" stop-color="#7000ff" />
+      <stop offset="100%" stop-color="#ff007f" />
+    </linearGradient>
+    <linearGradient id="crystalShine" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#00f0ff" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0.2" />
+    </linearGradient>
+    <filter id="neonFilter" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Emblem / Crystal Hexagon Prism -->
+  <g transform="translate(15, 10)">
+    <!-- Outer Glow Polygon -->
+    <polygon points="50,5 95,28 95,72 50,95 5,72 5,28" fill="rgba(112, 0, 255, 0.15)" stroke="url(#primaryGlow)" stroke-width="2.5" filter="url(#neonFilter)" />
+    <!-- Inner Crystal Facets -->
+    <polygon points="50,15 85,33 85,67 50,85 15,67 15,33" fill="none" stroke="#00f0ff" stroke-width="1.2" stroke-opacity="0.6" stroke-dasharray="4,2" />
+    <!-- Gamepad / Cosmic 'V' Fusion Inside -->
+    <path d="M35,38 L50,56 L65,38 M50,56 L50,76" stroke="url(#primaryGlow)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="50" cy="56" r="4" fill="#00f0ff" filter="url(#neonFilter)" />
+    <circle cx="28" cy="46" r="2.5" fill="#ff007f" />
+    <circle cx="72" cy="46" r="2.5" fill="#00f0ff" />
+  </g>
+
+  <!-- GAMEVERSE Typography -->
+  <text x="135" y="65" font-family="'Orbitron', 'Rajdhani', -apple-system, sans-serif" font-weight="900" font-size="44" letter-spacing="6" fill="#ffffff">
+    GAME<tspan fill="url(#primaryGlow)" filter="url(#neonFilter)">VERSE</tspan>
+  </text>
+  
+  <!-- Creator Credit Subtext -->
+  <text x="138" y="94" font-family="'Rajdhani', 'Segoe UI', sans-serif" font-weight="600" font-size="13" letter-spacing="4" fill="#00f0ff" opacity="0.9">
+    BY SHIV YOGI <tspan fill="#ff007f" opacity="0.8">✦</tspan> NEXT-GEN CONSOLE
+  </text>
+</svg>
